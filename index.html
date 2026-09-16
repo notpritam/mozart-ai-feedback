@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Mozart AI — Product & Frontend Feedback · Pritam Sharma</title>
+<style>
+  :root{
+    --bg:#0b0b0f; --panel:#14141b; --panel-2:#1b1b25; --line:#2a2a37;
+    --ink:#eef0f6; --muted:#a2a6b8; --faint:#6f7488;
+    --accent:#8b7bff; --accent-2:#57e0c9; --warn:#ffb457; --pink:#ff7ac2;
+    --radius:16px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.6; -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--accent-2); text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:860px; margin:0 auto; padding:0 22px}
+
+  header.hero{
+    position:relative; overflow:hidden;
+    background:
+      radial-gradient(1200px 400px at 15% -10%, rgba(139,123,255,.28), transparent 60%),
+      radial-gradient(900px 400px at 100% 0%, rgba(87,224,201,.18), transparent 55%),
+      linear-gradient(180deg,#101017,#0b0b0f);
+    border-bottom:1px solid var(--line);
+    padding:64px 0 44px;
+  }
+  .eyebrow{color:var(--accent-2); font-weight:600; letter-spacing:.14em; text-transform:uppercase; font-size:12px}
+  h1{font-size:clamp(28px,5vw,44px); line-height:1.1; margin:.35em 0 .2em; letter-spacing:-.02em}
+  .lede{color:var(--muted); font-size:18px; max-width:60ch; margin:.4em 0 0}
+  .meta{display:flex; flex-wrap:wrap; gap:8px 18px; color:var(--faint); font-size:14px; margin-top:22px}
+  .meta b{color:var(--ink); font-weight:600}
+
+  .note{
+    margin:26px 0 2px; padding:16px 18px; border:1px solid var(--line);
+    background:linear-gradient(180deg,rgba(255,180,87,.07),rgba(255,180,87,.02));
+    border-left:3px solid var(--warn); border-radius:12px; color:#e9dcc6; font-size:15px;
+  }
+
+  main{padding:14px 0 80px}
+  section{padding:34px 0; border-bottom:1px solid var(--line)}
+  section:last-child{border-bottom:0}
+  h2{font-size:24px; letter-spacing:-.01em; margin:0 0 6px}
+  h2 .num{color:var(--faint); font-weight:600; font-size:16px; margin-right:8px}
+  h3{font-size:16px; margin:26px 0 6px; color:var(--ink)}
+  .sub{color:var(--muted); margin:.2em 0 1.2em}
+  p{margin:.6em 0}
+  ul{margin:.5em 0; padding-left:20px} li{margin:.3em 0}
+  .muted{color:var(--muted)} .faint{color:var(--faint)}
+  .tag{display:inline-block; font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase;
+       padding:3px 9px; border-radius:999px; vertical-align:middle}
+  .tag.bug{background:rgba(255,122,194,.14); color:#ffa8d6; border:1px solid rgba(255,122,194,.3)}
+  .tag.sugg{background:rgba(87,224,201,.12); color:var(--accent-2); border:1px solid rgba(87,224,201,.3)}
+  .tag.roi{background:rgba(255,180,87,.14); color:var(--warn); border:1px solid rgba(255,180,87,.3)}
+
+  /* email card */
+  .emailcard{background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden}
+  .emailcard .bar{display:flex; align-items:center; justify-content:space-between; gap:10px;
+    padding:12px 16px; background:var(--panel-2); border-bottom:1px solid var(--line)}
+  .emailcard .bar span{color:var(--muted); font-size:13px}
+  .copybtn{cursor:pointer; border:1px solid var(--line); background:#23232f; color:var(--ink);
+    font:inherit; font-size:13px; font-weight:600; padding:7px 14px; border-radius:9px; transition:.15s}
+  .copybtn:hover{background:#2c2c3a; border-color:#3a3a4a}
+  .copybtn.done{background:rgba(87,224,201,.15); border-color:rgba(87,224,201,.4); color:var(--accent-2)}
+  pre.email{margin:0; padding:20px 18px; white-space:pre-wrap; word-wrap:break-word;
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:13.5px; line-height:1.65; color:#dfe2ee}
+
+  /* finding cards */
+  .card{background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); padding:20px 20px 6px; margin:16px 0}
+  .card h3{margin-top:0; display:flex; align-items:baseline; gap:10px; flex-wrap:wrap}
+  .fix{margin:.4em 0 1em; padding:12px 14px; background:var(--panel-2); border:1px solid var(--line); border-radius:10px; font-size:14.5px}
+  .fix b{color:var(--accent-2)}
+  code{background:#20202b; border:1px solid var(--line); padding:1px 6px; border-radius:6px; font-size:13px; font-family:ui-monospace,Menlo,monospace; color:#e7c9ff}
+  figure{margin:14px 0 6px}
+  figure img{width:100%; height:auto; display:block; border:1px solid var(--line); border-radius:12px; background:#000}
+  figcaption{color:var(--faint); font-size:12.5px; margin-top:8px; text-align:center}
+
+  .group-label{color:var(--accent); font-weight:700; letter-spacing:.08em; text-transform:uppercase; font-size:12px; margin-top:8px}
+
+  /* competitor table */
+  .tbl{width:100%; border-collapse:collapse; margin:10px 0; font-size:14.5px}
+  .tbl th,.tbl td{border:1px solid var(--line); padding:10px 12px; text-align:left; vertical-align:top}
+  .tbl th{background:var(--panel-2); color:var(--muted); font-weight:600}
+  .tbl td b{color:var(--ink)}
+  .wrapx{overflow-x:auto}
+
+  .pill{display:inline-flex; gap:8px; align-items:center; background:var(--panel); border:1px solid var(--line);
+    padding:6px 12px; border-radius:999px; font-size:13px; color:var(--muted); margin:4px 6px 4px 0}
+  footer{padding:30px 0 60px; color:var(--faint); font-size:13px}
+  footer a{color:var(--muted)}
+  .backlink{color:var(--faint); font-size:13px}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Product &amp; Frontend Feedback</div>
+    <h1>Mozart AI — my notes &amp; feedback</h1>
+    <p class="lede">My take on the product, plus the bugs and UX issues I noticed using it — with quick fixes.</p>
+    <div class="meta">
+      <span>By <b>Pritam Sharma</b></span>
+      <span><b>16 Sep 2026</b></span>
+      <span><a href="https://blog.notpritam.in">blog.notpritam.in</a></span>
+      <span class="faint">Living document — updated as I go deeper</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+
+  <!-- POSITIONING -->
+  <section>
+    <h2><span class="num">1</span>How I see Mozart</h2>
+    <p>The way I see it, Mozart isn't for people who just want to type a prompt and get a song. It's more for someone who actually <b>knows music</b> and isn't in a hurry — who wants to build the track themselves, not just generate it. It works like a co-producer inside a real DAW, so you stay in control of what you make. That's the part I like about it.</p>
+  </section>
+
+  <!-- FINDINGS -->
+  <section>
+    <h2><span class="num">2</span>Hands-on findings</h2>
+    <p class="sub">First-hand, using the live product. Grouped by surface.</p>
+
+    <div class="group-label">A · Paywall / pricing — highest ROI</div>
+
+    <div class="card">
+      <h3>1. Discount badges are nearly invisible + no hierarchy <span class="tag roi">Revenue</span></h3>
+      <p>The "42% OFF" / "40% OFF" badges are colored text on a same-hue gradient (cyan-on-cyan, orange-on-orange, purple-on-purple) — the single most persuasive element is the hardest to read, and likely fails WCAG contrast. The three plans also read as one wall of text: same layout, weight and size, so nothing guides the eye to the recommended tier.</p>
+      <div class="fix"><b>Fix:</b> high-contrast solid discount badge; visually dominate the recommended tier and let the others recede; enforce a clear read order — name → price + savings → the one number that matters → CTA. Contrast + hierarchy here map <b>directly</b> to conversion.</div>
+      <figure><img src="images/01-pricing-hierarchy-badges.png" alt="Pricing cards with low-contrast discount badges" loading="lazy"><figcaption>The "42% OFF" badges nearly disappear into each card's gradient.</figcaption></figure>
+    </div>
+
+    <div class="card">
+      <h3>2. Upgrade page over-scrolls into dead space <span class="tag bug">Bug</span></h3>
+      <p>The plans view scrolls freely past its content into a large empty black area, and clips the card headers at the top — the conversion screen feels unanchored.</p>
+      <div class="fix"><b>Fix:</b> bound the dialog to <code>max-height: 100dvh</code>, scroll inside only when needed, lock body scroll while open, remove the empty overflow.</div>
+      <figure><img src="images/02-pricing-overscroll.png" alt="Pricing page scrolled into empty space with clipped headers" loading="lazy"><figcaption>Content clipped at the top; large dead scroll region below.</figcaption></figure>
+    </div>
+
+    <div class="card">
+      <h3>3. Plan-card border-radius doesn't nest <span class="tag bug">Bug</span></h3>
+      <p>The outer selection border and inner gradient panel use mismatched radii, so the rounded corners don't sit concentrically.</p>
+      <div class="fix"><b>Fix:</b> inner radius should equal outer radius minus the border/inset — <code>inner = outer − border</code>. One line.</div>
+      <figure><img src="images/03-plan-card-radius.png" alt="Plan card with mismatched corner radii" loading="lazy"><figcaption>Border pulls away from the fill at the corners.</figcaption></figure>
+    </div>
+
+    <div class="group-label">B · Navigation &amp; session — the "real workstation" feel</div>
+
+    <div class="card">
+      <h3>4. Active nav item loses its icon <span class="tag bug">Bug</span></h3>
+      <p>On the selected item the pill goes white and the label flips to black — but the icon stays white and disappears (Studio shows text only, while other rows keep their icon).</p>
+      <div class="fix"><b>Fix:</b> the icon should use <code>currentColor</code> so it inverts with the label.</div>
+      <figure><img src="images/04-sidebar-active-icon.png" alt="Active Studio nav item missing its icon" loading="lazy"><figcaption>"Studio" is selected — but its icon is white-on-white and gone.</figcaption></figure>
+    </div>
+
+    <div class="card">
+      <h3>5. Flicker when switching sidebar options <span class="tag bug">Bug</span></h3>
+      <p>Switching items flickers — the selection/content flash before settling, so navigation feels unstable.</p>
+      <div class="fix"><b>Fix:</b> keep the sidebar persistent across routes (don't remount), apply the active state optimistically on click, and swap only the content region behind a stable container.</div>
+      <figcaption style="text-align:left" class="faint">Screen recording available on request (file exceeds inline limits).</figcaption>
+    </div>
+
+    <div class="card">
+      <h3>6. Controls look enabled while the view is still loading <span class="tag bug">Bug</span></h3>
+      <p>During a Layers/Studio switch the toolbar buttons (add, search, download, share, layout, transport) render at full opacity while the canvas is still skeleton-loading — so you can click controls that aren't wired up yet. <span class="muted">That same frame also showed ~29 console errors / 16 warnings — worth a triage pass; errors during transitions likely drive #5.</span></p>
+      <figure><img src="images/05-studio-loading-buttons.png" alt="Studio toolbar buttons appear active while content is still loading" loading="lazy"><figcaption>Toolbar looks interactive; the canvas underneath is still empty skeleton.</figcaption></figure>
+    </div>
+
+    <div class="card">
+      <h3>7. …but control-readiness is inconsistent <span class="tag bug">Bug</span></h3>
+      <p>On switching to Vibe, the <b>Invite</b> button stays <em>disabled</em> until everything finishes loading — the opposite of #6. So readiness feels arbitrary across the app.</p>
+      <div class="fix"><b>Fix (covers #6 &amp; #7):</b> one consistent model — controls that don't depend on page data (Invite, Upgrade) enable immediately; controls that need the loaded project show a clear disabled/loading state until ready.</div>
+      <figure><img src="images/06-vibe-invite-disabled.png" alt="Invite button disabled on the Vibe page during load" loading="lazy"><figcaption>Invite sits disabled until the whole view has loaded.</figcaption></figure>
+    </div>
+
+    <div class="card">
+      <h3>8. Returning to Studio should resume the last project <span class="tag sugg">Suggestion</span></h3>
+      <p>Leaving Studio and coming back doesn't reopen the project you were working on — friction on every context-switch.</p>
+      <div class="fix"><b>Fix:</b> persist the last-opened project (per user) and restore it on return, ideally with scroll/playhead position. "Pick up where I left off" is table-stakes for a serious DAW — and it directly answers the "less solid than Ableton" sentiment.</div>
+    </div>
+
+    <div class="group-label">C · Loading feedback</div>
+
+    <div class="card">
+      <h3>9. Two stacked loading states per navigation <span class="tag sugg">Suggestion</span></h3>
+      <p>Navigating shows a spinner in the sidebar, then a shimmer skeleton on the page — two affordances back-to-back for one action; it reads as janky.</p>
+      <div class="fix"><b>Fix:</b> pick one — ideally the shimmer skeleton (it hints at the incoming layout) — and drop the sidebar spinner. One calm loading state per transition feels more polished, even at the same speed.</div>
+    </div>
+
+    <div class="group-label">D · Playback &amp; audio</div>
+
+    <div class="card">
+      <h3>10. Volume doesn't stick when switching Layer ↔ Vibe <span class="tag bug">Bug</span></h3>
+      <p>If I turn the volume down in Layer, go to a Vibe session, then come back, it doesn't stay — it resets. So it can suddenly blast loud if there's a high-pitched or loud part.</p>
+      <div class="fix"><b>Fix:</b> keep the volume I set across the Layer/Vibe switch (same session-state fix as #8).</div>
+    </div>
+
+    <div class="card">
+      <h3>11. Can't click to mute — have to drag it down <span class="tag bug">Bug</span></h3>
+      <p>Clicking the volume doesn't mute it; I have to drag the slider all the way down every time.</p>
+      <div class="fix"><b>Fix:</b> make clicking the volume mute/unmute, and remember the last level.</div>
+    </div>
+  </section>
+
+  <!-- PRODUCT IDEAS -->
+  <section>
+    <h2><span class="num">3</span>Product ideas</h2>
+    <h3>Hum-to-track (mobile → desktop)</h3>
+    <p>Record a melody on mobile → Mozart isolates it to a clean stem + MIDI → TAB suggests chords/drums → the session syncs to desktop to arrange &amp; mix by text. Turns the hardest DAW moment (the blank start) into a 30-second win, and scopes mobile as <em>capture</em>, not a mini-generator.</p>
+    <h3>A "Hooks"-style share loop (inspired by Suno)</h3>
+    <p>Suno's Hooks lets a creator turn a song into a short vertical clip and publish it to the community — free, driving virality + discovery. Mozart is strong at <em>making</em> but thin on <em>sharing</em> (where Suno wins the consumer). A Mozart Hooks would be stronger thanks to the authorship angle: auto-detect or hand-pick the catchiest 8–15s of a track you actually produced, wrap it with cover art/captions, and export a vertical clip in one click.</p>
+  </section>
+
+  <!-- PROCESS -->
+  <section>
+    <h2><span class="num">4</span>Beyond the UI — product &amp; process</h2>
+    <h3>A proper help / docs page</h3>
+    <p>You already have a "Usage Guidelines" popover with good tips. I'd grow it into a proper help/docs page — short tutorials and example prompts — and show small tips inside the app when they're useful (like when a generation fails). Better guidance would fix a lot of the "it didn't work" moments.</p>
+    <figure><img src="images/07-usage-guidelines-help.png" alt="Existing Usage Guidelines popover" loading="lazy"><figcaption>The current "Usage Guidelines" popover — a great seed for real onboarding.</figcaption></figure>
+    <h3>Learn from your power users</h3>
+    <p>Instrument the product and study what your best creators actually do — the prompts, flows and settings that produce great tracks — then surface those as templates/defaults/tips for everyone. The fastest way to raise the median output is to productize the top 5%'s habits.</p>
+    <h3>Do regular customer calls</h3>
+    <p>Talk to users on a regular cadence — it surfaces exactly this kind of friction long before it shows up as churn. At Emergent we do this often and it pays off; I'd push for it here too.</p>
+  </section>
+
+  <footer>
+    <div>Sources:
+      <a href="https://elevenlabs.io/blog/mozart-ai">ElevenLabs × Mozart</a> ·
+      <a href="https://www.musicbusinessworldwide.com/music-tech-startup-mozart-ai-raises-6m-in-oversubscribed-seed-round-led-by-balderton-capital/">MBW (funding)</a> ·
+      <a href="https://musically.com/2026/02/11/ai-music-startup-mozart-ai-raises-6m-after-reaching-100k-users/">Music Ally</a> ·
+      <a href="https://www.veena.studio/blog/mozart-ai-review">Veena review</a> ·
+      <a href="https://www.aimusicpreneur.com/ai-tools/mozart-ai/">AIMusicpreneur</a> ·
+      <a href="https://help.suno.com/en/articles/8049409">Suno Hooks</a>
+    </div>
+    <p style="margin-top:16px">Prepared by Pritam Sharma · <a href="https://blog.notpritam.in">blog.notpritam.in</a></p>
+  </footer>
+
+</main>
+
+</body>
+</html>
